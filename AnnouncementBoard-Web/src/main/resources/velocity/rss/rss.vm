@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+	<channel>
+		<title>$channel.title</title>
+		<link>$channel.link</link>
+#if ($channel.description)
+		<description>$channel.description</description>
+#end
+
+#if ($channel.language)
+		<language>$channel.language</language>
+#end
+
+#if ($channel.pubDate)
+		<pubDate>$channel.pubDate</pubDate>
+#end
+
+#if ($channel.lastBuildDate)
+		<lastBuildDate>$channel.lastBuildDate</lastBuildDate>
+#end
+
+#if ($channel.docs)
+		<docs>$channel.docs</docs>
+#end
+
+#if ($channel.generator)
+		<generator>$channel.generator</generator>
+#end
+
+#if ($channel.managingEditor)
+		<managingEditor>$channel.managingEditor</managingEditor>
+#end
+
+#if ($channel.webMaster)
+		<webMaster>$channel.webMaster</webMaster>
+#end
+
+#if ($channel.items)
+  #foreach ($item in $channel.items)
+		<item>
+			<title><![CDATA[$item.title]]></title>
+			<link>$item.link</link>
+			<description>
+				<![CDATA[$item.description
+				<br />
+#if  ($item.location.address)
+				<br />$item.location.address
+#end
+#if  ($item.location.city)
+				<br />$item.location.city
+#end
+				]]>
+			</description>
+			<author><![CDATA[$item.creator]]></author>
+			<pubDate>$item.pubDate</pubDate>
+			<guid>$item.guid</guid>
+		</item>
+  #end
+#end
+	</channel>
+</rss>

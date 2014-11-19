@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>	
+	<package name="com.bielu.annoboard.admin" extends="com.bielu.annoboard.config" namespace="/admin">
+		<global-results>
+			<result name="success" type="redirect-action">
+				<!-- change to browse when implemented -->
+				<param name="actionName">create</param>
+				<param name="namespace">/announcement</param>
+			</result>
+		</global-results>
+
+		<action name="initSignUp" class="signUpAction" method="init">
+			<result name="input">signUp.jsp</result>
+		</action>
+
+		<action name="doSignUp" class="signUpAction">
+			<result name="input">signUp.jsp</result>
+		</action>
+
+		<action name="doLogIn" class="logInAction">
+			<result name="input" type="chain">
+				<param name="actionName">index</param>
+				<param name="namespace">/</param>
+			</result>
+		</action>
+	</package>
+</struts>

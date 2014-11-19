@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.bielu.annoboard.domain">
+	<class name="User" table="user">
+
+		<id name="id" column="ID" type="long" unsaved-value="0">
+			<generator class="native" />
+		</id>
+
+		<property name="username" column="username" length="30" unique="true" not-null="true" />
+		<property name="firstName" column="first_name" length="255" />
+		<property name="lastName" column="last_name" length="255" />
+		<property name="email" column="email" length="255" not-null="true" />
+		<property name="creationDate" column="creation_date" type="calendar" />
+		<property name="password" column="password" length="40" />
+	</class>
+</hibernate-mapping>

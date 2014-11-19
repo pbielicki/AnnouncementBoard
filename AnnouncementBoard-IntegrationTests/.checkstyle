@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fileset-config file-format-version="1.2.0" simple-config="false">
+    <local-check-config name="Java regular sources" location=".settings/checkstyle/java-regular.cs.xml" type="project" description="">
+        <additional-data name="protect-config-file" value="true"/>
+    </local-check-config>
+    <local-check-config name="Java test sources" location=".settings/checkstyle/java-test.cs.xml" type="project" description="">
+        <additional-data name="protect-config-file" value="false"/>
+    </local-check-config>
+    <fileset name="Java regular sources" enabled="true" check-config-name="Java regular sources" local="true">
+        <file-match-pattern match-pattern=".java$" include-pattern="true"/>
+        <file-match-pattern match-pattern="^src.test" include-pattern="false"/>
+        <file-match-pattern match-pattern=".com\\amadeus\\japi." include-pattern="false"/>
+        <file-match-pattern match-pattern="^target" include-pattern="false"/>
+    </fileset>
+    <fileset name="Java test sources" enabled="true" check-config-name="Java test sources" local="true">
+        <file-match-pattern match-pattern=".java$" include-pattern="true"/>
+        <file-match-pattern match-pattern="^src.main" include-pattern="false"/>
+        <file-match-pattern match-pattern="^target" include-pattern="false"/>
+    </fileset>
+</fileset-config>

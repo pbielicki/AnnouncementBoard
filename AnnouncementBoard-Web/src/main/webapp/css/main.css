@@ -1,0 +1,23 @@
+body {
+	font-family: Tahoma;
+	font-size: 9pt;
+	background-color: #eeeeee;
+}
+
+input, textarea, select {
+	border-style: solid;
+	border-color: #000;
+	border-width: 1px; 
+	background-color: #ffffff;
+	font-family: Verdana;
+	font-size: 9pt;
+}
+
+input.submit {
+	font-weight: bold;
+	background-color: #cccccc;
+}
+
+.capitalize {
+	text-transform: capitalize;
+}

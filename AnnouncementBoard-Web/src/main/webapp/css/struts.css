@@ -1,0 +1,19 @@
+.required {
+	color: #585;
+}
+
+.errorMessage {
+	color: #080;
+	font-weight: bold;
+}
+
+.errorLabel {
+	color: #080;
+	font-style: italic;
+	font-weight: bold;
+	font-family: Arial;
+}
+
+label.label {
+	font-weight: bold;
+}

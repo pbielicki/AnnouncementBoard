@@ -1,0 +1,185 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.bielu</groupId>
+		<artifactId>AnnouncementBoard</artifactId>
+		<version>0.1-SNAPSHOT</version>
+	</parent>
+	
+	<artifactId>AnnouncementBoard-IntegrationTests</artifactId>
+	<packaging>jar</packaging>
+	<name>Announcement Board Integration Tests</name>
+	
+	<!-- Software Dependencies -->
+	<dependencies>
+		<dependency>
+			<groupId>com.bielu</groupId>
+			<artifactId>AnnouncementBoard-Web</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
+
+		<!-- Test -->
+        <dependency>
+            <groupId>org.openqa.selenium.client-drivers</groupId>
+            <artifactId>selenium-java-client-driver</artifactId>
+            <version>1.0-beta-1</version>
+            <scope>test</scope>
+        </dependency>
+	</dependencies>
+
+	<!-- Developers -->
+	<developers>
+		<!-- Przemyslaw Bielicki -->
+		<developer>
+			<id>pbielicki</id>
+			<name>Przemyslaw Bielicki</name>
+			<email>pbielicki@gmail.com</email>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
+	<!-- Profiles -->
+	<profiles>
+	    <profile>
+			<id>tomcat6x</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<container.name>tomcat6x</container.name>
+				<container.url>http://apache.multidist.com/tomcat/tomcat-6/v6.0.16/bin/apache-tomcat-6.0.16.zip</container.url>
+				<cargo.install.directory>C:\Dev\test\tomcat\</cargo.install.directory>
+			</properties>
+	    </profile>
+	</profiles>
+
+	<!-- Build -->
+	<build>
+		<plugins>
+			<!-- Surefire -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<testFailureIgnore>${maven.test.ignore}</testFailureIgnore>
+					<includes>
+						<include>**/*Test.java</include>
+					</includes>
+					<forkMode>once</forkMode>
+					<!-- Skip the normal tests, we'll run them in the integration-test phase -->
+					<skip>true</skip>
+					<argLine>
+						-Xms256m -Xmx512m -XX:MaxPermSize=256m
+					</argLine>
+					<reportFormat>plain</reportFormat>
+				</configuration>
+				
+                <executions>
+                    <execution>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${maven.test.skip}</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+			</plugin>
+			
+			<!-- Cargo -->
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.0-alpha-5</version>
+				<executions>
+					<execution>
+						<id>install</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>install</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>start-container</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+						<configuration>
+							<wait>false</wait>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-container</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<container>
+						<containerId>${container.name}</containerId>
+						<zipUrlInstaller>
+							<url>${container.url}</url>
+							<installDir>${cargo.install.directory}</installDir>
+						</zipUrlInstaller>
+						<log>${project.build.directory}/logs/${container.name}.log</log>
+						<output>${project.build.directory}/logs/${container.name}.out</output>
+						<timeout>600000</timeout>
+					</container>
+					
+					<configuration>
+						<deployables>
+			              <deployable>
+			                <groupId>com.bielu</groupId>
+			                <artifactId>AnnouncementBoard-Web</artifactId>
+			                <type>war</type>
+			                <properties>
+			                  <context>AnnouncementBoard</context>
+			                </properties>
+			              </deployable>
+			            </deployables>					
+						<properties>
+						  <cargo.servlet.port>8080</cargo.servlet.port>
+						  <cargo.rmi.port>1099</cargo.rmi.port>
+						</properties>
+					</configuration>
+				</configuration>
+			</plugin>
+			
+			<!-- Selenium -->
+			<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>selenium-maven-plugin</artifactId>
+                <version>1.0-beta-3</version>
+                <executions>
+                    <execution>
+			            <id>start</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start-server</goal>
+                        </goals>
+                        <configuration>
+                            <background>true</background>
+                        </configuration>
+                    </execution>
+
+			        <execution>
+			            <id>stop</id>
+			            <phase>post-integration-test</phase>
+			            <goals>
+			                <goal>stop-server</goal>
+			            </goals>
+			        </execution>
+                </executions>
+            </plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<!-- Transaction Definitions -->
+
+	<!-- Struts actions -->
+	<bean id="rssAction" 
+			scope="prototype" 
+			class="com.bielu.annoboard.action.rss.RssAction" 
+	/>
+	
+	<bean id="signUpAction" 
+			scope="prototype" 
+			class="com.bielu.annoboard.action.admin.SignUpAction" 
+	/>
+	<bean id="logInAction" 
+			scope="prototype" 
+			class="com.bielu.annoboard.action.admin.LogInAction"
+	/>
+
+	<bean id="announcementAction" 
+			scope="prototype" 
+			class="com.bielu.annoboard.action.AnnouncementAction" 
+	/>
+	
+	<bean id="announcementSearchAction" 
+			scope="prototype" 
+			class="com.bielu.annoboard.action.AnnouncementSearchAction" 
+	/>
+	
+	<bean id="dispatcherAction" 
+			scope="prototype" 
+			class="com.bielu.annoboard.action.common.DispatcherAction" 
+	/>
+
+	<!-- Actions don't have to implement interface - they can be simple POJOs -->
+	<aop:config proxy-target-class="true" />
+</beans>

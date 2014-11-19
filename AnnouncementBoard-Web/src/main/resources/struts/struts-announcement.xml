@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>	
+	<package name="com.bielu.annoboard" extends="com.bielu.annoboard.config" namespace="/announcement">
+		<default-interceptor-ref name="authentication" />
+	
+		<action name="create" class="announcementAction" method="create">
+			<result type="redirect-action">
+				<param name="actionName">rss</param>
+				<param name="namespace">/</param>
+			</result>
+			<result name="input">createAnnouncement.jsp</result>
+		</action>
+	</package>
+	
+	<package  name="com.bielu.annoboard.search" extends="com.bielu.annoboard.config" namespace="/">
+		<action name="search" class="announcementSearchAction" method="search">
+			<result name="search">announcement/search.jsp</result>
+			<result name="input" type="redirect-action">search</result>
+			<result name="announcement">announcement/announcement.jsp</result>
+		</action>
+	</package>
+</struts>
